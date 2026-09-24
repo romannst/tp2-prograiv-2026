@@ -6,15 +6,16 @@ import { createDb } from '../../src/db/connection';
 
 describe('NoteService - getNote (Ejercicio 3)', () => {
     let service: NoteServiceImpl;
+    let repo: SqliteNoteRepository;
 
     beforeEach(() => {
         const db = createDb(':memory:');
-        const repo = new SqliteNoteRepository(db);
+        repo = new SqliteNoteRepository(db);
         service = new NoteServiceImpl(repo);
     });
 
     it('obtiene una nota existente por su id', () => {
-        const creada = service.createNote({
+        const creada = repo.create({
             title: 'Comprar pan',
             content: 'Antes de las 20hs'
         });
@@ -33,4 +34,3 @@ describe('NoteService - getNote (Ejercicio 3)', () => {
         expect(encontrada).toBeUndefined();
     });
 });
-
