@@ -36,4 +36,23 @@ describe('GET /notes/:id (Ejercicio 3)', () => {
         expect(response.status).toBe(404);
         expect(response.body.error).toBe('NotFound');
     });
+
+    describe('PATCH /notes/:id (Ejercicio 4)', () => {
+    it('debe responder con 200 y modificar la nota parcialmente', async () => {
+
+    const resCreate = await request(app)
+        .post('/notes')
+        .send({ title: 'Nota Inicial', content: 'Contenido Inicial' });
+
+    const noteId = resCreate.body.id;
+
+    const response = await request(app)
+        .patch(`/notes/${noteId}`)
+        .send({ title: 'Nota Modificada' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.title).toBe('Nota Modificada');
+    expect(response.body.content).toBe('Contenido Inicial');
+    });
+});
 });
